@@ -1,5 +1,7 @@
 defmodule ToyRobotSimulator.ToyRobot do
 
+  import ToyRobotSimulator.Tabletop
+
   defstruct [x: 0, y: 0, facing: :east]
   alias ToyRobotSimulator.ToyRobot
 
@@ -26,6 +28,11 @@ defmodule ToyRobotSimulator.ToyRobot do
   end
 
   def place(location) do
-    %ToyRobot{x: location.x, y: location.y, facing: location.facing}
+    if is_valid_location(location) do
+      %ToyRobot{x: location.x, y: location.y, facing: location.facing}
+    else
+      %ToyRobot{}
+    end
   end
+
 end
