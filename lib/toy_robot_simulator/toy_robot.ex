@@ -28,7 +28,7 @@ defmodule ToyRobotSimulator.ToyRobot do
   end
 
   def place(location) do
-    if is_valid_location(location) do
+    if valid_location?(location) do
       %ToyRobot{x: location.x, y: location.y, facing: location.facing}
     else
       %ToyRobot{}
