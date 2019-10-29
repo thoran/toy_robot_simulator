@@ -30,4 +30,12 @@ defmodule ToyRobotSimulator.ToyRobotTest do
     end
   end
 
+  describe ".place()" do
+    test "when a valid location" do
+      location = %{x: 2, y: 3, facing: :north}
+      toy_robot = location |> ToyRobot.place
+      assert toy_robot == %ToyRobot{x: 2, y: 3, facing: :north}
+    end
+  end
+
 end

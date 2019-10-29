@@ -25,4 +25,7 @@ defmodule ToyRobotSimulator.ToyRobot do
     end
   end
 
+  def place(location) do
+    %ToyRobot{x: location.x, y: location.y, facing: location.facing}
+  end
 end
