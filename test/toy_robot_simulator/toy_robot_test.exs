@@ -4,7 +4,7 @@ defmodule ToyRobotSimulator.ToyRobotTest do
   doctest ToyRobotSimulator.ToyRobot
   alias ToyRobotSimulator.ToyRobot
 
-  describe ".move()" do
+  describe "move()" do
     test "when facing East" do
       toy_robot = %ToyRobot{x: 0, y: 0, facing: :east}
       toy_robot = toy_robot |> ToyRobot.move
@@ -30,7 +30,7 @@ defmodule ToyRobotSimulator.ToyRobotTest do
     end
   end
 
-  describe ".place()" do
+  describe "place()" do
     test "when a valid location" do
       location = %{x: 2, y: 3, facing: :north}
       toy_robot = location |> ToyRobot.place
