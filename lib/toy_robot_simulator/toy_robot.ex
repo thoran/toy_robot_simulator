@@ -6,33 +6,65 @@ defmodule ToyRobotSimulator.ToyRobot do
   alias ToyRobotSimulator.ToyRobot
 
   @doc """
-  Moves the toy robot one space in the direction it's facing.
-  ## Examples
-    iex> alias ToyRobotSimulator.ToyRobot
-    ToyRobotSimulator.ToyRobot
-    iex> toy_robot = %ToyRobot{}
-    %ToyRobot{x: 0, y: 0, facing: :east}
-    iex> toy_robot |> ToyRobot.move
-    %ToyRobot{x: 1, y: 0, facing: :east}
-    iex> toy_robot |> ToyRobot.move |> ToyRobot.move
-    %ToyRobot{x: 2, y: 0, facing: :east}
-  """
+    Moves the toy robot one space in the direction it's facing.
 
-  def move(%ToyRobot{} = robot) do
-    case robot.facing do
-      :east -> %ToyRobot{robot | x: robot.x + 1}
-      :west -> %ToyRobot{robot | x: robot.x - 1}
-      :north -> %ToyRobot{robot | y: robot.y + 1}
-      :south -> %ToyRobot{robot | y: robot.y - 1}
+    ## Examples
+      iex> alias ToyRobotSimulator.ToyRobot
+      ToyRobotSimulator.ToyRobot
+      iex> %ToyRobot{}
+      %ToyRobot{x: nil, y: nil, facing: nil}
+      iex> toy_robot = %ToyRobot{x: 0, y: 0, facing: :east}
+      %ToyRobot{x: 0, y: 0, facing: :east}
+      iex> toy_robot |> ToyRobot.move
+      %ToyRobot{x: 1, y: 0, facing: :east}
+      iex> toy_robot |> ToyRobot.move |> ToyRobot.move
+      %ToyRobot{x: 2, y: 0, facing: :east}
+  """
+  def move(%ToyRobot{} = toy_robot) do
+    if valid_move?(toy_robot) do
+      case toy_robot.facing do
+        :east -> %ToyRobot{toy_robot | x: toy_robot.x + 1}
+        :west -> %ToyRobot{toy_robot | x: toy_robot.x - 1}
+        :north -> %ToyRobot{toy_robot | y: toy_robot.y + 1}
+        :south -> %ToyRobot{toy_robot | y: toy_robot.y - 1}
+      end
+    else
+      toy_robot
     end
   end
 
-  def place(location) do
+  @doc """
+    Places the toy robot on the grid.
+
+    ## Examples
+      iex> alias ToyRobotSimulator.ToyRobot
+      ToyRobotSimulator.ToyRobot
+      iex> location = %{x: 0, y: 0}
+      %{x: 0, y: 0}
+      iex> location_and_orientation = %{x: location.x, y: location.y, facing: :west}
+      %{x: 0, y: 0, facing: :west}
+      iex> location_and_orientation |> ToyRobot.place
+      %ToyRobot{x: 0, y: 0, facing: :west}
+  """
+  def place(location_and_orientation) do
+    location = %{x: location_and_orientation.x, y: location_and_orientation.y}
     if valid_location?(location) do
-      %ToyRobot{x: location.x, y: location.y, facing: location.facing}
+      %ToyRobot{x: location_and_orientation.x, y: location_and_orientation.y, facing: location_and_orientation.facing}
     else
       %ToyRobot{}
     end
   end
 
+  def valid_move?(%ToyRobot{x: x, y: y, facing: facing}) do
+    current_location = %{x: x, y: y}
+    candidate_location = (
+      case facing do
+        :east -> %{current_location | x: x + 1}
+        :west -> %{current_location | x: x - 1}
+        :north -> %{current_location | y: y + 1}
+        :south -> %{current_location | y: y - 1}
+      end
+    )
+    valid_location?(candidate_location)
+  end
 end
