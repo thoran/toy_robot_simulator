@@ -16,7 +16,7 @@ defmodule ToyRobotSimulator.TabletopTest do
     end
   end
 
-  describe "valid_y_location?()" do
+  describe "valid_y_location?() is true" do
     test "when only y is supplied at the bottom end of the y dimension" do
       assert Tabletop.valid_y_location?(%{y: 0}) == true
     end
@@ -26,7 +26,7 @@ defmodule ToyRobotSimulator.TabletopTest do
     end
   end
 
-  describe "valid_location?()" do
+  describe "valid_location?() is true" do
 
     # Bottom left corner
 
@@ -53,10 +53,9 @@ defmodule ToyRobotSimulator.TabletopTest do
     end
   end
 
-  describe "valid_location?() is false" do
+  # Single dimension
 
-    # Single dimension
-
+  describe "valid_x_location?() is false" do
     test "when only x is supplied below the bottom end of the x dimension" do
       assert Tabletop.valid_x_location?(%{x: -1}) == false
     end
@@ -64,7 +63,9 @@ defmodule ToyRobotSimulator.TabletopTest do
     test "when only x is supplied above the top end of the x dimension" do
       assert Tabletop.valid_x_location?(%{x: 5}) == false
     end
+  end
 
+  describe "valid_y_location?() is false" do
     test "when only y is supplied below the bottom end of the y dimension" do
       assert Tabletop.valid_y_location?(%{y: -1}) == false
     end
@@ -72,6 +73,9 @@ defmodule ToyRobotSimulator.TabletopTest do
     test "when only y is supplied above the top end of the y dimension" do
       assert Tabletop.valid_y_location?(%{y: 5}) == false
     end
+  end
+
+  describe "valid_location?() is false" do
 
     # Bottom left corner
 
