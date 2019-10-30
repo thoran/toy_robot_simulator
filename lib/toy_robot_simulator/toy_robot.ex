@@ -6,13 +6,35 @@ defmodule ToyRobotSimulator.ToyRobot do
   alias ToyRobotSimulator.ToyRobot
 
   @doc """
-    Moves the toy robot one space in the direction it's facing.
+    Places the toy robot on the grid.
 
     ## Examples
       iex> alias ToyRobotSimulator.ToyRobot
       ToyRobotSimulator.ToyRobot
       iex> %ToyRobot{}
       %ToyRobot{x: nil, y: nil, facing: nil}
+      iex> location = %{x: 0, y: 0}
+      %{x: 0, y: 0}
+      iex> location_and_orientation = %{x: location.x, y: location.y, facing: :west}
+      %{x: 0, y: 0, facing: :west}
+      iex> ToyRobot.place(location_and_orientation)
+      %ToyRobot{x: 0, y: 0, facing: :west}
+  """
+  def place(location_and_orientation) do
+    location = %{x: location_and_orientation.x, y: location_and_orientation.y}
+    if valid_location?(location) do
+      %ToyRobot{x: location_and_orientation.x, y: location_and_orientation.y, facing: location_and_orientation.facing}
+    else
+      %ToyRobot{}
+    end
+  end
+
+  @doc """
+    Moves the toy robot one space in the direction it's facing.
+
+    ## Examples
+      iex> alias ToyRobotSimulator.ToyRobot
+      ToyRobotSimulator.ToyRobot
       iex> toy_robot = %ToyRobot{x: 0, y: 0, facing: :east}
       %ToyRobot{x: 0, y: 0, facing: :east}
       iex> toy_robot |> ToyRobot.move
@@ -34,24 +56,22 @@ defmodule ToyRobotSimulator.ToyRobot do
   end
 
   @doc """
-    Places the toy robot on the grid.
+    Turns the toy robot 90 degrees in place.
 
     ## Examples
       iex> alias ToyRobotSimulator.ToyRobot
       ToyRobotSimulator.ToyRobot
-      iex> location = %{x: 0, y: 0}
-      %{x: 0, y: 0}
-      iex> location_and_orientation = %{x: location.x, y: location.y, facing: :west}
-      %{x: 0, y: 0, facing: :west}
-      iex> location_and_orientation |> ToyRobot.place
-      %ToyRobot{x: 0, y: 0, facing: :west}
+      iex> toy_robot = %ToyRobot{x: 0, y: 0, facing: :east}
+      %ToyRobot{x: 0, y: 0, facing: :east}
+      iex> ToyRobot.turn(:left, toy_robot)
+      %ToyRobot{x: 0, y: 0, facing: :north}
+      iex> ToyRobot.turn(:right, toy_robot)
+      %ToyRobot{x: 0, y: 0, facing: :south}
   """
-  def place(location_and_orientation) do
-    location = %{x: location_and_orientation.x, y: location_and_orientation.y}
-    if valid_location?(location) do
-      %ToyRobot{x: location_and_orientation.x, y: location_and_orientation.y, facing: location_and_orientation.facing}
-    else
-      %ToyRobot{}
+  def turn(way, %ToyRobot{} = toy_robot) do
+    case way do
+      :left -> turn_left(toy_robot)
+      :right -> turn_right(toy_robot)
     end
   end
 
@@ -66,13 +86,6 @@ defmodule ToyRobotSimulator.ToyRobot do
       end
     )
     valid_location?(candidate_location)
-  end
-
-  def turn(way, %ToyRobot{} = toy_robot) do
-    case way do
-      :left -> turn_left(toy_robot)
-      :right -> turn_right(toy_robot)
-    end
   end
 
   defp turn_left(%ToyRobot{facing: facing} = toy_robot) do
