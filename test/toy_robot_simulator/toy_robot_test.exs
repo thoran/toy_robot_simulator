@@ -110,4 +110,58 @@ defmodule ToyRobotSimulator.ToyRobotTest do
     end
   end
 
+  describe "turn()" do
+
+    # Left turn
+
+    test "when turning left, facing East" do
+      toy_robot = %ToyRobot{x: 0, y: 0, facing: :east}
+      toy_robot = ToyRobot.turn(:left, toy_robot)
+      assert toy_robot.facing == :north
+    end
+
+    test "when turning left, facing West" do
+      toy_robot = %ToyRobot{x: 0, y: 0, facing: :west}
+      toy_robot = ToyRobot.turn(:left, toy_robot)
+      assert toy_robot.facing == :south
+    end
+
+    test "when turning left, facing North" do
+      toy_robot = %ToyRobot{x: 0, y: 0, facing: :north}
+      toy_robot = ToyRobot.turn(:left, toy_robot)
+      assert toy_robot.facing == :west
+    end
+
+    test "when turning left, facing South" do
+      toy_robot = %ToyRobot{x: 0, y: 0, facing: :south}
+      toy_robot = ToyRobot.turn(:left, toy_robot)
+      assert toy_robot.facing == :east
+    end
+
+    # Right turn
+
+    test "when turning right, facing East" do
+      toy_robot = %ToyRobot{x: 0, y: 0, facing: :east}
+      toy_robot = ToyRobot.turn(:right, toy_robot)
+      assert toy_robot.facing == :south
+    end
+
+    test "when turning right, facing West" do
+      toy_robot = %ToyRobot{x: 0, y: 0, facing: :west}
+      toy_robot = ToyRobot.turn(:right, toy_robot)
+      assert toy_robot.facing == :north
+    end
+
+    test "when turning right, facing North" do
+      toy_robot = %ToyRobot{x: 0, y: 0, facing: :north}
+      toy_robot = ToyRobot.turn(:right, toy_robot)
+      assert toy_robot.facing == :east
+    end
+
+    test "when turning right, facing South" do
+      toy_robot = %ToyRobot{x: 0, y: 0, facing: :south}
+      toy_robot = ToyRobot.turn(:right, toy_robot)
+      assert toy_robot.facing == :west
+    end
+  end
 end

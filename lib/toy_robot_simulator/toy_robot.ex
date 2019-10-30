@@ -67,4 +67,30 @@ defmodule ToyRobotSimulator.ToyRobot do
     )
     valid_location?(candidate_location)
   end
+
+  def turn(way, %ToyRobot{} = toy_robot) do
+    case way do
+      :left -> turn_left(toy_robot)
+      :right -> turn_right(toy_robot)
+    end
+  end
+
+  defp turn_left(%ToyRobot{facing: facing} = toy_robot) do
+    case facing do
+      :east -> %ToyRobot{toy_robot | facing: :north}
+      :west -> %ToyRobot{toy_robot | facing: :south}
+      :north -> %ToyRobot{toy_robot | facing: :west}
+      :south -> %ToyRobot{toy_robot | facing: :east}
+    end
+  end
+
+  defp turn_right(%ToyRobot{facing: facing} = toy_robot) do
+    case facing do
+      :east -> %ToyRobot{toy_robot | facing: :south}
+      :west -> %ToyRobot{toy_robot | facing: :north}
+      :north -> %ToyRobot{toy_robot | facing: :east}
+      :south -> %ToyRobot{toy_robot | facing: :west}
+    end
+  end
+
 end
