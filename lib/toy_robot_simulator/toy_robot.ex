@@ -75,6 +75,15 @@ defmodule ToyRobotSimulator.ToyRobot do
     end
   end
 
+  def report(toy_robot) do
+    IO.puts report_string(toy_robot)
+  end
+
+  def report_string(toy_robot) do
+    output_facing = String.upcase(Atom.to_string(toy_robot.facing))
+    "#{toy_robot.x},#{toy_robot.y},#{output_facing}"
+  end
+
   def valid_move?(%ToyRobot{x: x, y: y, facing: facing}) do
     current_location = %{x: x, y: y}
     candidate_location = (

@@ -123,6 +123,22 @@ defmodule ToyRobotSimulator.ToyRobotTest do
     end
   end
 
+  describe "report()" do
+    test "reports the current location and orientation" do
+      location = %{x: 0, y: 0, facing: :east}
+      toy_robot = ToyRobot.place(location)
+      assert ToyRobot.report(toy_robot) == :ok
+    end
+  end
+
+  describe "report_string()" do
+    test "reports the current location and orientation" do
+      location = %{x: 0, y: 0, facing: :east}
+      toy_robot = ToyRobot.place(location)
+      assert ToyRobot.report_string(toy_robot) == "0,0,EAST"
+    end
+  end
+
   describe "valid_move?()" do
     test "when facing East on the Eastern edge of the grid" do
       toy_robot = %ToyRobot{x: 4, y: 0, facing: :east}
