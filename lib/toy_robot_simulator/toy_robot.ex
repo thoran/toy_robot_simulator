@@ -2,7 +2,7 @@ defmodule ToyRobotSimulator.ToyRobot do
 
   import ToyRobotSimulator.Tabletop
 
-  defstruct [x: 0, y: 0, facing: :east]
+  defstruct [x: nil, y: nil, facing: nil]
   alias ToyRobotSimulator.ToyRobot
 
   @doc """
