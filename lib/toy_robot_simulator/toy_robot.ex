@@ -20,13 +20,13 @@ defmodule ToyRobotSimulator.ToyRobot do
       iex> toy_robot |> ToyRobot.move |> ToyRobot.move
       %ToyRobot{x: 2, y: 0, facing: :east}
   """
-  def move(%ToyRobot{} = toy_robot) do
+  def move(%ToyRobot{x: x, y: y, facing: facing} = toy_robot) do
     if valid_move?(toy_robot) do
-      case toy_robot.facing do
-        :east -> %ToyRobot{toy_robot | x: toy_robot.x + 1}
-        :west -> %ToyRobot{toy_robot | x: toy_robot.x - 1}
-        :north -> %ToyRobot{toy_robot | y: toy_robot.y + 1}
-        :south -> %ToyRobot{toy_robot | y: toy_robot.y - 1}
+      case facing do
+        :east -> %ToyRobot{toy_robot | x: x + 1}
+        :west -> %ToyRobot{toy_robot | x: x - 1}
+        :north -> %ToyRobot{toy_robot | y: y + 1}
+        :south -> %ToyRobot{toy_robot | y: y - 1}
       end
     else
       toy_robot
